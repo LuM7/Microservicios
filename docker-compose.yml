@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile.db
+    volumes:
+      - ./db:/data
+    ports:
+      - "5432:5432"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    env_file:
+      - .env
